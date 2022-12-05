@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/lucien-zak/api-nodeJS/issues"
   },
-  "homepage": "https://github.com/lucien-zak/api-nodeJS#readme"
+  "homepage": "https://github.com/lucien-zak/api-nodeJS#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
