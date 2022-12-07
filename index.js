@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 const userRoute = require('./routes/user');
 const groupRoute = require('./routes/group');
+const cookieParser = require('cookie-parser');
 
 
 //TODO
@@ -22,6 +23,7 @@ const groupRoute = require('./routes/group');
 // - Les routes qui permettent d’ajouter, modifier, supprimer un groupe
 // - Une route qui permet de modifier les utilisateurs présents dans un groupe
 app.use(express.json());
+app.use(cookieParser());
 
 app.get('/', function(req, res) {
   res.send('hello world');

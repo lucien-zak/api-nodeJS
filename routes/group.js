@@ -25,12 +25,9 @@ router.get('/', async (req, res) => {
   });
   // - Une route qui permet de s'inscrire à un groupe, prend comme paramètre l'id du groupe, et l'utilisateur connecté
   router.put('/subscribe/:id',auth, async (req, res) => {
-    console.log(req.user.id);
     const group = await Group.findByPk(req.params.id);
-    console.log(group);
     if (!group) {return res.json({ message: "Le groupe n'éxiste pas" })};
     const user = await User.findByPk(req.user.id);
-    console.log(user.groupId, req.params.id)
     if (user.groupId == req.params.id ) {return res.json({ message: "Vous êtes déjà inscrit au groupe : "+ group.title })};
     user.update({ groupId: group.id });
     res.json({ message: 'Vous êtes bien inscrit au groupe : '+ group.title });

@@ -42,6 +42,20 @@ router.get("/", async (req, res) => {
   res.json(users);
 });
 
+//Modifie un utilisateur connecté
+router.patch("/",auth, async (req, res) => {
+    if (!req.body) {return res.json({ message: "Aucune donnée à modifier" })};
+
+    const user = await User.findByPk(req.user.id);
+    try {
+        user.update(req.body);
+        res.json(user);
+    } catch (error) {
+        res.json(error);   
+    }
+});
+
+// Récupere les utilisateurs et leurs groupes
 router.get('/:id', auth ,async (req,res) => {
     const user = await User.findByPk(req.params.id, { include : [{ model: Group, attributes: ['title'] }], attributes: ['firstName', 'lastName', 'email'] });
     if (!user) 

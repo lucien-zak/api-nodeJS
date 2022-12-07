@@ -17,6 +17,7 @@ const login = async (req,res,next) => {
         bcrypt.compare(password, user.password, function(err, result) {
           if (result) {
             const accessToken = JWT.sign({ email: user.email, id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            res.cookie('token', accessToken, { httpOnly: true })
             res.status(200).json({message : accessToken});
           } else {
             res.status(401).json({message : 'Mot de passe incorrect'});
@@ -30,6 +31,7 @@ const login = async (req,res,next) => {
 
 const auth = (req, res, next) => {
     const authHeader = req.headers['authorization'];
+    console.log(req.headers.cookie);
     const token = authHeader && authHeader.split(' ')[1];
     if (token == null) return res.status(401).json({message : 'Token absent'});
     JWT.verify(token, process.env.JWT_SECRET, (err, user) => {
